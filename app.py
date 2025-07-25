@@ -1,5 +1,7 @@
 from fastapi import FastAPI, WebSocket
 from starlette.websockets import WebSocketDisconnect
+import asyncio
+from datetime import datetime, timezone
 
 async def echo_message(websocket:WebSocket):
     data = await websocket.receive_text()
@@ -19,7 +21,7 @@ async def websocket_endpoint(websocket: WebSocket):
         while True:
             echo_message_task = asyncio.create_task(echo_message(websocket)) #create_task transforms corroutine into task object
             send_time_task = asyncio.create_task(send_time(websocket))
-            done, pending = await.asyncio.wait(
+            done, pending = await asyncio.wait(
                 {echo_message_task, send_time_task},
                 return_when = asyncio.FIRST_COMPLETED,
             )
