@@ -15,7 +15,7 @@ async def send_time(websocket: WebSocket):
 
 app = FastAPI()
 @app.websocket('/ws')
-async def websocket_endpoint(websocket: WebSocket):
+async def websocket_endpoint(websocket: WebSocket, usrname: str = 'Anonymous',):
     await websocket.accept() #call method accept first to tell client we agree to open tunnel
     try: #necessary to handle client disconnection to use try-except block
         while True:
